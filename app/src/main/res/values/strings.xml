@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">LocationTracker</string>
+    <string name="start">start</string>
+    <string name="search_number">Search Number</string>
+    <string name="county_info">COUNTY INFO</string>
+    <string name="gps_route">GPS ROUTE</string>
+    <string name="traffic_near">Traffic Near</string>
+    <string name="voice_navigation">Voice Navigation</string>
+    <string name="lbl_official_name">Official Name</string>
+    <string name="region">Region</string>
+    <string name="current_gps_location">Current Gps Location</string>
+    <string name="longitude">Longitude</string>
+    <string name="current_postal_address">Current Postal Address</string>
+    <string name="current_city">Current City</string>
+    <string name="current_country">Current Country</string>
+    <string name="current_address">Current Address</string>
+    <string name="view_on_map">View on map</string>
+</resources>

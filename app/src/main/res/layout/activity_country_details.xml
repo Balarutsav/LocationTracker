@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey"
+    tools:context=".Activity.CountryInfoListing">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="All Countries"
+            app:titleTextColor="@color/white" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivCountry"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:maxWidth="20dp"
+            android:layout_gravity="center"
+            app:shapeAppearance="@style/circle"
+            android:src="@drawable/logo" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="5dp"
+            android:elevation="5dp"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                >
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/clCenterGuideline"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="156dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvOfficialNameLbl"
+                    style="@style/headerTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/lbl_official_name"
+                    android:textColor="@color/purple_200"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvofficialName"
+                    style="@style/mediumTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Priority of andora" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAlternativeNameLbl"
+                    style="@style/headerTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Capital"
+                    android:textColor="@color/purple_200"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvOfficialNameLbl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAlternativeName"
+                    style="@style/mediumTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                    app:layout_constraintTop_toTopOf="@id/tvAlternativeNameLbl"
+                    tools:text="Ad,priciplity of Andora ,principle" />
+
+                <!--
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:text="@string/region"
+                                style="@style/headerTV"
+                                android:textSize="18sp"
+                                app:layout_constraintTop_toBottomOf="@id/tvAlternativeNameLbl"
+                                android:id="@+id/tvRegionLbl"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/purple_200"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="20dp"
+                                app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                                android:layout_height="wrap_content"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                tools:text="Europe"
+                                style="@style/mediumTV"
+                                android:textSize="18sp"
+                                app:layout_constraintTop_toTopOf="@id/tvRegionLbl"
+                                android:id="@+id/tv"
+                                android:textColor="@color/black"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginStart="20dp"
+                                app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                                android:layout_height="wrap_content"/>
+                -->
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCurrencyLbl"
+                    style="@style/headerTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Currency"
+                    android:textColor="@color/purple_200"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAlternativeNameLbl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCurrency"
+                    style="@style/mediumTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                    app:layout_constraintTop_toTopOf="@id/tvCurrencyLbl"
+                    tools:text="Southrem Europe" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAreaLbl"
+                    style="@style/headerTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Area"
+                    android:textColor="@color/purple_200"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCurrencyLbl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvArea"
+                    style="@style/mediumTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                    app:layout_constraintTop_toTopOf="@id/tvAreaLbl"
+                    tools:text="Europe" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLanguagesLbl"
+                    style="@style/headerTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Languages"
+                    android:textColor="@color/purple_200"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAreaLbl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLanguages"
+                    style="@style/mediumTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                    app:layout_constraintTop_toTopOf="@id/tvLanguagesLbl"
+                    tools:text="CA" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPopulationLbl"
+                    style="@style/headerTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Population"
+                    android:textColor="@color/purple_200"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvLanguagesLbl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPopulation"
+                    style="@style/mediumTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                    app:layout_constraintTop_toTopOf="@id/tvPopulationLbl"
+                    tools:text="Europe" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnMyLocation"
+            style="@style/textBold"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/background_round"
+            android:gravity="center"
+            android:padding="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="View On Map"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb" />
+    </LinearLayout>
+
+</FrameLayout>

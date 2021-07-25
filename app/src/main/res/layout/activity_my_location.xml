@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        app:title="My Location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_grey"
+            android:orientation="vertical"
+            tools:context=".Activity.MyLocationActivity">
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/ad_view"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
+                ads:adSize="LARGE_BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                ads:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                ads:layout_constraintEnd_toEndOf="parent"
+                ads:layout_constraintStart_toStartOf="parent" />
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".MapsActivity" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:layout_margin="20dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:padding="20dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTitle"
+                        style="@style/headerTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/current_gps_location"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLatitudeLbl"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Latitude"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                        app:layout_constraintHorizontal_bias="0.2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLatitude"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.3"
+                        app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                        app:layout_constraintTop_toTopOf="@id/tvLatitudeLbl" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLongitudeLbl"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/longitude"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toStartOf="@id/clCenterGuideline"
+                        app:layout_constraintHorizontal_bias="0.2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvLatitudeLbl" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLongitude"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.3"
+                        app:layout_constraintStart_toEndOf="@id/clCenterGuideline"
+                        app:layout_constraintTop_toTopOf="@id/tvLongitudeLbl" />
+
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/clCenterGuideline"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.3" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:layout_margin="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCurrentPostalAddress"
+                        style="@style/headerTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/current_postal_address"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCurrentCityLbl"
+                        style="@style/headerTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="start"
+                        android:text="@string/current_city"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCity"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="Ahmadabad" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCurrentStatelbl"
+                        style="@style/headerTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="start"
+                        android:text="Current State"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCurrentState"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="Gujrat" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCountyLbl"
+                        style="@style/headerTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="start"
+                        android:text="@string/current_country"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCountry"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="India" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPostCodeLbl"
+                        style="@style/headerTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="start"
+                        android:text="Post Code"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPostCode"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="India" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCurrentAddressLbl"
+                        style="@style/headerTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="start"
+                        android:text="@string/current_address"
+                        android:textColor="@color/grey"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCurrentAddress"
+                        style="@style/mediumTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/purple_200"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="India" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnViewOnMap"
+                style="@style/textBold"
+                android:layout_width="match_parent"
+                android:layout_margin="30dp"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/background_round"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/view_on_map"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:paddingBottom="10dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tb" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

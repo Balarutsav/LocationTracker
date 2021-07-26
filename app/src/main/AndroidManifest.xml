@@ -7,14 +7,19 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
+        android:name=".ApplicationClass"
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:name=".ApplicationClass"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.LocationTracker">
-        <activity android:name=".ApplicationClass"></activity>
+        <activity android:name=".Activity.MainActivity">     <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".ApplicationClass" />
         <activity android:name=".Activity.RouteFinderActivity" />
         <activity android:name=".Activity.MyLocationActivity" />
         <activity android:name=".Activity.TrafficeActivity" />
@@ -24,17 +29,12 @@
         <activity android:name=".Activity.StartActivity" />
         <activity android:name=".Activity.PermissionActivity" />
         <activity android:name=".Activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC8mqmVkKtLYxti361nFOT9FErG64BzYI4" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />

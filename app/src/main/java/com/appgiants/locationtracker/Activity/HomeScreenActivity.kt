@@ -38,8 +38,8 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
         binding.btnTraficNear.setOnClickListener(this)
         loadAd()
         val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-    }
+        binding.adView.setOnClickListener(this)
+        }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

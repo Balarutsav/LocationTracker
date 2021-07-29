@@ -1,8 +1,11 @@
 package com.appgiants.locationtracker.Activity
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.appgiants.locationtracker.R
 import com.appgiants.locationtracker.databinding.ActivityHomeScreenBinding
@@ -24,7 +27,24 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding= ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        getLocationPermission()
         init()
+    }
+    private fun getLocationPermission(): Boolean {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                100)
+            return false
+        }
     }
     fun init(){
         setSupportActionBar(binding.tb)

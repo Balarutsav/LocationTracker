@@ -46,6 +46,7 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
         setContentView(binding.root)
         init()
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
@@ -116,17 +117,20 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
             }
             locationAddress?.let {
                 Log.e("data",it)
+                var gson=Gson()
+                if (locationAddress!!.isNotEmpty()) {
+                    var addressDetailsModel=gson.fromJson(locationAddress,AddressDetailsModel::class.java)
+                    if (addressDetailsModel!=null){
+                        binding.tvLatitude.text=addressDetailsModel.latitude.getFormattedData()
+                        binding.tvLongitude.text=addressDetailsModel.longtitude.getFormattedData()
+                        binding.tvCountry.text=addressDetailsModel.country
+                        binding.tvCity.text=addressDetailsModel.city
+                        binding.tvCurrentState.text=addressDetailsModel.state
+                        binding.tvCurrentAddress.text=addressDetailsModel.complet_address
+                        binding.tvPostCode.text=addressDetailsModel.pin_code
+
+                    }
             }
-            var gson=Gson()
-            var addressDetailsModel=gson.fromJson(locationAddress,AddressDetailsModel::class.java)
-            if (addressDetailsModel!=null){
-                binding.tvLatitude.text=addressDetailsModel.latitude.getFormattedData()
-                binding.tvLongitude.text=addressDetailsModel.longtitude.getFormattedData()
-                binding.tvCountry.text=addressDetailsModel.country
-                binding.tvCity.text=addressDetailsModel.city
-                binding.tvCurrentState.text=addressDetailsModel.state
-                binding.tvCurrentAddress.text=addressDetailsModel.complet_address
-                binding.tvPostCode.text=addressDetailsModel.pin_code
 
             }
             Log.e("json",binding.tvTitle.text.toString())
@@ -146,6 +150,7 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
             val intent = Intent(
                 Settings.ACTION_LOCATION_SOURCE_SETTINGS
             )
+            finish()
             startActivity(intent)
         }
         alertDialog.setNegativeButton(
@@ -157,18 +162,20 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
     override fun onMapReady(p0: GoogleMap) {
         map=p0
         val location=  gpsTracker  .getLocation(LocationManager.GPS_PROVIDER)
-        map?.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                LatLng(location!!.latitude,
-                    location!!.longitude), 20f))
-        latitude=location!!.latitude;
-        longitude=location!!.longitude
-        val options = MarkerOptions()
-            .title("My Location")
-            .position(LatLng(location!!.latitude,location!!.longitude))
-            .snippet("You are here")
+        if (location!=null) {
+            map?.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(location!!.latitude,
+                        location!!.longitude), 20f))
+            latitude=location!!.latitude;
+            longitude=location!!.longitude
+            val options = MarkerOptions()
+                .title("My Location")
+                .position(LatLng(location!!.latitude,location!!.longitude))
+                .snippet("You are here")
 
-        val sourceMarker: Marker = map.addMarker(options)
+            val sourceMarker: Marker = map.addMarker(options)
+        }
 
     }
 

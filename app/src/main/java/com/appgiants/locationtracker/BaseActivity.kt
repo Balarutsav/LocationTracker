@@ -1,5 +1,6 @@
 package com.cluttrfly.driver.ui.base
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.appgiants.locationtracker.R
+import com.appgiants.locationtracker.Utils.ApiClient
+import com.appgiants.locationtracker.Utils.ApiInterface
 import com.appgiants.locationtracker.Utils.hideKeyboard
 import com.blongho.country_data.World
 import com.google.android.gms.ads.MobileAds
@@ -15,16 +18,23 @@ import com.google.android.gms.ads.RequestConfiguration
 import com.google.gson.Gson
 
 abstract class BaseActivity() : AppCompatActivity() {
+    open var gson = Gson()
+    var apiClienc: ApiInterface? = null
 
-open var gson= Gson()
+
+    var activity: Activity? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         World.init(applicationContext)
+        activity = this
+//        apiClienc = ApiClient.getClient(activity)?.create(ApiInterface::class.java)
         MobileAds.initialize(this)
         MobileAds.setRequestConfiguration(
             RequestConfiguration.Builder()
                 .setTestDeviceIds(listOf("ABCDEF012345"))
                 .build()
+
         )
 
     }
@@ -46,6 +56,7 @@ open var gson= Gson()
         startActivity(intent)
         overridePendingTransition(R.anim.right_in, R.anim.left_out)
     }
+
     fun startActivityWithclearallactivities(target: Class<*>, bundle: Bundle? = null) {
         //Call new activity with finish current activity
         val intent = Intent(this, target)

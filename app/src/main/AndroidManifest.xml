@@ -14,11 +14,17 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.LocationTracker">
-        <activity android:name=".Activity.MainActivity">     <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Activity.FindLocation">
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        </activity>
+        <activity android:name=".Activity.MainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ApplicationClass" />
         <activity android:name=".Activity.RouteFinderActivity" />
         <activity android:name=".Activity.MyLocationActivity" />
@@ -29,6 +35,7 @@
         <activity android:name=".Activity.StartActivity" />
         <activity android:name=".Activity.PermissionActivity" />
         <activity android:name=".Activity.SplashActivity">
+
 
         </activity>
 

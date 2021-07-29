@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:background="@color/dark_grey"
+    android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+
+        app:title="My Location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:layout_margin="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="search number"
+                android:inputType="phone"
+                android:id="@+id/edtMn"
+                android:textColorHint="@color/white"
+                android:text="8141161410"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:background="#55000000"
+                android:layout_height="wrap_content"/>
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/gl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".MapsActivity" />
+<androidx.constraintlayout.widget.Guideline
+    android:layout_width="match_parent"
+    android:id="@+id/gl"
+    android:orientation="horizontal"
+    app:layout_constraintGuide_percent="0.7"
+    android:layout_height="0dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/gl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivContact"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+
+                android:scaleType="centerCrop"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearanceOverlay="@style/circle"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                app:layout_constraintVertical_bias="0.2"
+                app:layout_constraintTop_toTopOf="@id/ivContact"
+                app:layout_constraintBottom_toBottomOf="@id/ivContact"
+                tool:text="India"
+                style="@style/textBold"
+                android:textSize="18sp"
+                android:id="@+id/tvName"
+                android:textColor="@color/purple_200"
+                android:layout_marginStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivContact"
+
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                app:layout_constraintVertical_bias="0.2"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                app:layout_constraintStart_toStartOf="@id/tvName"
+                tool:text="India"
+                style="@style/textBold"
+                android:textSize="18sp"
+
+                android:id="@+id/tvCompany"
+                android:textColor="@color/white"
+                android:drawableStart="@android:drawable/ic_menu_call"
+                android:drawableTint="@color/white"
+
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                app:layout_constraintVertical_bias="0.2"
+                app:layout_constraintTop_toBottomOf="@id/tvCompany"
+                app:layout_constraintStart_toStartOf="@id/tvCompany"
+                tool:text="India"
+                style="@style/textBold"
+                android:textSize="18sp"
+                android:id="@+id/tvAddress"
+                android:textColor="@color/white"
+                android:drawableTint="@color/white"
+                android:layout_height="wrap_content"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</LinearLayout>

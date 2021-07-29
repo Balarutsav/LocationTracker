@@ -82,7 +82,7 @@ fun Context.getAddressFromLocation(
                     Log.e("country name",address.countryName    )
                     result = jsonObject.toString();
                 }
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 Log.e("Get Address", "Unable connect to Geocoder", e)
             } finally {
                 val message = Message.obtain()

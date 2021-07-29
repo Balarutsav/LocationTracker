@@ -9,11 +9,13 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.appgiants.locationtracker.Model.ContactList
 import com.appgiants.locationtracker.Model.NumberLocationDetails
 
 import com.appgiants.locationtracker.R
 import com.appgiants.locationtracker.Utils.ApiInterface
 import com.appgiants.locationtracker.databinding.ActivityFindLocationBinding
+import com.appgiants.locationtracker.room.AppDatabase
 import com.cluttrfly.driver.ui.base.BaseActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -33,11 +35,14 @@ import javax.security.auth.callback.Callback
 
 class FindLocation : BaseActivity(), OnMapReadyCallback, View.OnClickListener {
     lateinit var map: GoogleMap
+    lateinit var contactList: ContactList
+    lateinit var db:AppDatabase
     lateinit var binding: ActivityFindLocationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityFindLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         init()
     }
 
@@ -49,6 +54,16 @@ class FindLocation : BaseActivity(), OnMapReadyCallback, View.OnClickListener {
                 R.drawable.ic_back
             )
         )
+        var id=intent.getLongExtra("contact_id",0)
+        GlobalScope.launch(Dispatchers.Default) {
+            db = AppDatabase.getInstance(baseContext)
+            contactList=db.userDao().loadAllByIds(id)
+            Log.e("name",contactList.name)
+            Log.e("number",contactList.number)
+        }
+
+
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment

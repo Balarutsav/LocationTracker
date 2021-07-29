@@ -3,22 +3,22 @@ package com.appgiants.locationtracker.Adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.appgiants.locationtracker.Model.ContactList
+import com.appgiants.locationtracker.R
 import com.appgiants.locationtracker.databinding.RawContactListBinding
-import com.appgiants.locationtracker.databinding.RawCountryListBinding
-import com.blongho.country_data.Country
 
-open class ContactListAdapter(var list: List<ContactList>, var countryListener: onCountryListener) :
+open class ContactListAdapter(var list: List<ContactList>, var countryListener: OnConuntryClicked) :
     RecyclerView.Adapter<ContactListAdapter.CountryViewHolder>() {
     open class CountryViewHolder(
         private var binding: RawContactListBinding,
         private var context: Context,
-        private var countryListener: onCountryListener
+        private var countryListener: OnConuntryClicked
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(country: ContactList, position: Int) {
-            binding.ivCountryImage.setImageBitmap(country.bitmap)
+            binding.ivCountryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.user))
             binding.tvContactName.text = country.name
             binding.tvNumber.text = country.number
             binding.root.setOnClickListener {
@@ -46,7 +46,7 @@ open class ContactListAdapter(var list: List<ContactList>, var countryListener: 
         return list.size
     }
 
-    interface onCountryListener {
+    interface OnConuntryClicked {
         fun onCountryClicked(country: ContactList, position: Int)
     }
 

@@ -1,7 +1,6 @@
 package com.appgiants.locationtracker.Activity
 
 import android.Manifest
-import android.app.ProgressDialog
 import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,10 +12,9 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.widget.ListView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.room.Room
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.appgiants.locationtracker.Adapter.ContactListAdapter
 import com.appgiants.locationtracker.Model.ContactList
 import com.appgiants.locationtracker.R
@@ -30,7 +28,7 @@ import java.io.IOException
 import java.io.InputStream
 
 
-class MainActivity : BaseActivity() {
+class ContactListActivity : BaseActivity() {
     var rv: ListView? = null
     var arrayList: ArrayList<ContactList> = ArrayList()
     lateinit var db:AppDatabase
@@ -40,6 +38,11 @@ class MainActivity : BaseActivity() {
         onBackPressed()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +89,6 @@ class MainActivity : BaseActivity() {
             var adapter = ContactListAdapter(arrayList,
                 object : ContactListAdapter.OnConuntryClicked {
                     override fun onCountryClicked(contactList: ContactList, position: Int) {
-                        Toast.makeText(activity, contactList.name, Toast.LENGTH_SHORT).show()
                         var intent= Intent(activity,FindLocation::class.java)
                         intent.putExtra("contact_id",contactList.id)
                         startActivity(intent)
@@ -94,6 +96,13 @@ class MainActivity : BaseActivity() {
 
                 })
             binding.rv.adapter = adapter
+            binding.rv.addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+
             arrayList.addAll(db.userDao().getAll())
 
 
@@ -143,29 +152,5 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun getContactBitmap(contactId: Long): Bitmap? {
-        var photo = BitmapFactory.decodeResource(
-            resources,
-            R.drawable.user
-        )
 
-        try {
-            val contactUri: Uri = ContentUris.withAppendedId(
-                ContactsContract.Contacts.CONTENT_URI,
-                contactId
-            )
-            val displayPhotoUri: Uri =
-                Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.DISPLAY_PHOTO)
-            val fd = contentResolver.openAssetFileDescriptor(displayPhotoUri, "r")
-            val inputStream: InputStream? = fd!!.createInputStream()
-            if (inputStream != null) {
-                photo = BitmapFactory.decodeStream(inputStream)
-            }
-            assert(inputStream != null)
-            inputStream?.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return photo
-    }
 }

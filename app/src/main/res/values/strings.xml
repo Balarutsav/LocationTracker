@@ -15,4 +15,7 @@
     <string name="current_country">Current Country</string>
     <string name="current_address">Current Address</string>
     <string name="view_on_map">View on map</string>
+    <string name="sms">SMS</string>
+    <string name="un_named">Un Known</string>
+    <string name="lbl_enter_valid_mobile_numbewr">Mobile number is not valid</string>
 </resources>

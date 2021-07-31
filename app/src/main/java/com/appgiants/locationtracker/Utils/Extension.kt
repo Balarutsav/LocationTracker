@@ -1,18 +1,27 @@
 package com.appgiants.locationtracker.Utils
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.ContentUris
 import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatImageView
+import com.appgiants.locationtracker.R
 import com.bumptech.glide.Glide
 import org.json.JSONObject
 import java.io.IOException
+import java.io.InputStream
 import java.util.*
 
 fun Context.hideKeyboard() {
@@ -105,4 +114,44 @@ fun Context.getAddressFromLocation(
         }
     }
     thread.start()
+
+
+}
+fun Context.showAlert( message: String){
+
+    AlertDialog.Builder(this)
+        .setTitle(this.resources.getString(R.string.app_name))
+        .setMessage(message)
+        .setPositiveButton("Okay",
+            DialogInterface.OnClickListener { dialog, which ->
+
+            dialog.dismiss()
+            })
+        .show()
+}
+
+fun Context.getContactBitmap(contactId: Long): Bitmap? {
+    var photo = BitmapFactory.decodeResource(
+        this.resources,
+        R.drawable.user
+    )
+
+    try {
+        val contactUri: Uri = ContentUris.withAppendedId(
+            ContactsContract.Contacts.CONTENT_URI,
+            contactId
+        )
+        val displayPhotoUri: Uri =
+            Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.DISPLAY_PHOTO)
+        val fd =this.contentResolver.openAssetFileDescriptor(displayPhotoUri, "r")
+        val inputStream: InputStream? = fd!!.createInputStream()
+        if (inputStream != null) {
+            photo = BitmapFactory.decodeStream(inputStream)
+        }
+        assert(inputStream != null)
+        inputStream?.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return photo
 }

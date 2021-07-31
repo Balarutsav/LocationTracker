@@ -5,7 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+
 import androidx.annotation.Nullable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -123,7 +123,6 @@ class ApplicationClass : Application(), Application.ActivityLifecycleCallbacks,
                         isLoadingAd = false
                         loadTime = Date().getTime()
                         Log.d(Companion.LOG_TAG, "onAdLoaded.")
-                        Toast.makeText(context, "onAdLoaded", Toast.LENGTH_SHORT).show()
                     }
 
                     /**
@@ -134,7 +133,6 @@ class ApplicationClass : Application(), Application.ActivityLifecycleCallbacks,
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                         isLoadingAd = false
                         Log.d(Companion.LOG_TAG, "onAdFailedToLoad: " + loadAdError.message)
-                        Toast.makeText(context, "onAdFailedToLoad", Toast.LENGTH_SHORT).show()
                     }
                 })
         }
@@ -195,11 +193,7 @@ class ApplicationClass : Application(), Application.ActivityLifecycleCallbacks,
                         appOpenAd = null
                         isShowingAd = false
                         Log.d(Companion.LOG_TAG, "onAdDismissedFullScreenContent.")
-                        Toast.makeText(
-                            activity,
-                            "onAdDismissedFullScreenContent",
-                            Toast.LENGTH_SHORT
-                        ).show()
+
                         onShowAdCompleteListener.onShowAdComplete()
                         loadAd(activity)
                     }
@@ -212,12 +206,7 @@ class ApplicationClass : Application(), Application.ActivityLifecycleCallbacks,
                             Companion.LOG_TAG,
                             "onAdFailedToShowFullScreenContent: " + adError.message
                         )
-                        Toast.makeText(
-                            activity,
-                            "onAdFailedToShowFullScreenContent",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+
                         onShowAdCompleteListener.onShowAdComplete()
                         loadAd(activity)
                     }
@@ -225,8 +214,7 @@ class ApplicationClass : Application(), Application.ActivityLifecycleCallbacks,
                     /** Called when fullscreen content is shown.  */
                     override fun onAdShowedFullScreenContent() {
                         Log.d(Companion.LOG_TAG, "onAdShowedFullScreenContent.")
-                        Toast.makeText(activity, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT)
-                            .show()
+
                     }
                 })
             isShowingAd = true

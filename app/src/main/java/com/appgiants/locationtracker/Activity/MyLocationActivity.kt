@@ -1,6 +1,7 @@
 package com.appgiants.locationtracker.Activity
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.location.LocationManager
 import android.net.Uri
@@ -16,6 +17,7 @@ import com.appgiants.locationtracker.R
 import com.appgiants.locationtracker.Utils.GpsTracker
 import com.appgiants.locationtracker.Utils.getAddressFromLocation
 import com.appgiants.locationtracker.Utils.getFormattedData
+import com.appgiants.locationtracker.Utils.showAlert
 import com.appgiants.locationtracker.databinding.ActivityMyLocationBinding
 import com.cluttrfly.driver.ui.base.BaseActivity
 import com.google.android.gms.ads.AdRequest
@@ -29,6 +31,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
+import org.json.JSONObject
 import java.util.*
 
 
@@ -95,7 +98,7 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
 
                     getAddressFromLocation(
                     latitude, longitude,
-                    applicationContext, GeocoderHandler(binding)
+                    applicationContext, GeocoderHandler(binding,this)
                 )
             } else {
                 showSettingsAlert()
@@ -103,7 +106,7 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
 
     }
 
-    private class GeocoderHandler(private var binding: ActivityMyLocationBinding) : Handler() {
+    private class GeocoderHandler(private var binding: ActivityMyLocationBinding,private var context:Context) : Handler() {
         override fun handleMessage(message: Message) {
             val locationAddress: String?
             locationAddress = when (message.what) {
@@ -119,18 +122,23 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
                 Log.e("data",it)
                 var gson=Gson()
                 if (locationAddress!!.isNotEmpty()) {
-                    var addressDetailsModel=gson.fromJson(locationAddress,AddressDetailsModel::class.java)
-                    if (addressDetailsModel!=null){
-                        binding.tvLatitude.text=addressDetailsModel.latitude.getFormattedData()
-                        binding.tvLongitude.text=addressDetailsModel.longtitude.getFormattedData()
-                        binding.tvCountry.text=addressDetailsModel.country
-                        binding.tvCity.text=addressDetailsModel.city
-                        binding.tvCurrentState.text=addressDetailsModel.state
-                        binding.tvCurrentAddress.text=addressDetailsModel.complet_address
-                        binding.tvPostCode.text=addressDetailsModel.pin_code
+                   var jsonObject=JSONObject(locationAddress)
+                    try {
+                        var addressDetailsModel=gson.fromJson(jsonObject.toString(),AddressDetailsModel::class.java)
+                        if (addressDetailsModel!=null){
+                            binding.tvLatitude.text=addressDetailsModel.latitude.getFormattedData()
+                            binding.tvLongitude.text=addressDetailsModel.longtitude.getFormattedData()
+                            binding.tvCountry.text=addressDetailsModel.country
+                            binding.tvCity.text=addressDetailsModel.city
+                            binding.tvCurrentState.text=addressDetailsModel.state
+                            binding.tvCurrentAddress.text=addressDetailsModel.complet_address
+                            binding.tvPostCode.text=addressDetailsModel.pin_code
 
+                        }
+                    } catch (e: Exception) {
+                      context.showAlert  ("Something went wrong")
                     }
-            }
+                }
 
             }
             Log.e("json",binding.tvTitle.text.toString())

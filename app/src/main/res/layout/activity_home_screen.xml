@@ -147,7 +147,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb" />
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btnVoiceNavigation"
+            android:id="@+id/btnContacts"
             style="@style/textBold"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -157,7 +157,7 @@
             android:background="@drawable/background_round"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Voice Navigation"
+            android:text="Contacts"
             android:textColor="@color/white"
             android:padding="10dp"
             android:paddingBottom="10dp"

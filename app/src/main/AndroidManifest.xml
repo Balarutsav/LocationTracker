@@ -17,13 +17,9 @@
         <activity android:name=".Activity.FindLocation">
 
         </activity>
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".Activity.ContactListActivity">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ApplicationClass" />
         <activity android:name=".Activity.RouteFinderActivity" />
@@ -35,7 +31,11 @@
         <activity android:name=".Activity.StartActivity" />
         <activity android:name=".Activity.PermissionActivity" />
         <activity android:name=".Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

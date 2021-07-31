@@ -54,7 +54,8 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
         binding.btnCountryInfo.setOnClickListener(this)
         binding.btnGpsRoute.setOnClickListener(this)
         binding.btnMyLocation.setOnClickListener(this)
-        binding.btnVoiceNavigation.setOnClickListener(this)
+        binding.btnContacts.setOnClickListener(this)
+        binding.btnSearchNumber.setOnClickListener(this)
         binding.btnTraficNear.setOnClickListener(this)
         loadAd()
         val adRequest = AdRequest.Builder().build()
@@ -78,7 +79,13 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
             R.id.btnTraficNear->{
                 showInterstitial(v)
             }
+            R.id.btnSearchNumber->{
+                showInterstitial(v)
+            }
             R.id.btnMyLocation->{
+                showInterstitial(v)
+            }
+            R.id.btnContacts->{
                 showInterstitial(v)
             }
 
@@ -95,6 +102,9 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
                     mInterstitialAd = null
                     loadAd()
                     when(v?.id){
+                        binding.btnSearchNumber.id->{
+                            startActivityWithOutFinish(FindLocation::class.java)
+                        }
                         R.id.btnGpsRoute->{
 
                         }
@@ -107,7 +117,9 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
                         R.id.btnMyLocation->{
                             startActivityWithOutFinish(MyLocationActivity::class.java)
                         }
-
+                        R.id.btnContacts->{
+                            startActivityWithOutFinish(ContactListActivity::class.java)
+                        }
                     }
 
                 }
@@ -126,6 +138,27 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
                 }
             }
             mInterstitialAd?.show(this)
+        }else{
+            when(v.id){
+                binding.btnSearchNumber.id->{
+                    startActivityWithOutFinish(FindLocation::class.java)
+                }
+                R.id.btnGpsRoute->{
+
+                }
+                R.id.btnCountryInfo->{
+                    startActivityWithOutFinish(CountryInfoListing::class.java)
+                }
+                R.id.btnTraficNear->{
+                    startActivityWithOutFinish(TrafficeActivity::class.java)
+                }
+                R.id.btnMyLocation->{
+                    startActivityWithOutFinish(MyLocationActivity::class.java)
+                }
+                R.id.btnContacts->{
+                    startActivityWithOutFinish(ContactListActivity::class.java)
+                }
+            }
         }
     }
 

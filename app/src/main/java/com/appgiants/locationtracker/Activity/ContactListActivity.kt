@@ -1,6 +1,7 @@
 package com.appgiants.locationtracker.Activity
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -24,14 +25,16 @@ import com.cluttrfly.driver.ui.base.BaseActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.IOException
 import java.io.InputStream
 
 
-class ContactListActivity : BaseActivity() {
+class ContactListActivity : BaseActivity(),EasyPermissions.PermissionCallbacks {
     var rv: ListView? = null
     var arrayList: ArrayList<ContactList> = ArrayList()
     lateinit var db:AppDatabase
+    val rcContactPermission=102
     lateinit var binding: ActivityMainBinding
     override fun onNavigateUp(): Boolean {
         return super.onNavigateUp()
@@ -65,7 +68,12 @@ class ContactListActivity : BaseActivity() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
 // requesting to the user for permission.
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), 100)
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.read_contacts),
+                rcContactPermission,
+                Manifest.permission.READ_CONTACTS
+            )
         } else {
 //if app already has permission this block will execute.
             readContacts()
@@ -79,11 +87,23 @@ class ContactListActivity : BaseActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        readContacts()
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        if (requestCode==rcContactPermission){
+            readContacts()
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+
     }
 
     // function to read contacts using content resolver
     private fun readContacts() {
+        var dialog = ProgressDialog(activity, R.style.AppCompatAlertDialogStyle)
+        dialog.setMessage("Please wait contacts are loading")
 
         GlobalScope.launch(Dispatchers.Default) {
             var adapter = ContactListAdapter(arrayList,
@@ -95,17 +115,26 @@ class ContactListActivity : BaseActivity() {
                     }
 
                 })
-            binding.rv.adapter = adapter
-            binding.rv.addItemDecoration(
-                DividerItemDecoration(
-                    activity,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-
             arrayList.addAll(db.userDao().getAll())
 
 
+ launch (Dispatchers.Main){
+     if (arrayList.size==0) {
+         dialog.show()
+     }
+     binding.rv.adapter = adapter
+     binding.rv.addItemDecoration(
+         DividerItemDecoration(
+             activity,
+             DividerItemDecoration.VERTICAL
+         )
+     )
+
+
+ }
+
+
+        launch(Dispatchers.Default) {
             var list:ArrayList<ContactList> = ArrayList()
             val contentResolver = contentResolver
             val cursor: Cursor? =
@@ -140,8 +169,12 @@ class ContactListActivity : BaseActivity() {
 
                     db.userDao().insertAll(contactList)
                 } while (cursor.moveToNext())
+        }
                 launch(Dispatchers.Main) {
                     arrayList.clear()
+                    if (dialog.isShowing){
+                        dialog.dismiss()
+                    }
                     arrayList.addAll(list)
                     adapter.notifyDataSetChanged()
 

@@ -18,4 +18,7 @@
     <string name="sms">SMS</string>
     <string name="un_named">Un Known</string>
     <string name="lbl_enter_valid_mobile_numbewr">Mobile number is not valid</string>
+    <string name="ration_call">This app need access your call phone permssions</string>
+    <string name="edit">Edit</string>
+    <string name="read_contacts">app required readContacts permission</string>
 </resources>

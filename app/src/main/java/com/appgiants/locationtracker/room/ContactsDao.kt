@@ -11,6 +11,8 @@ interface ContactsDao {
 
     @Query("SELECT * FROM contactlist WHERE id IN (:userIds)")
     fun loadAllByIds(userIds: Long): ContactList
+    @Query("SELECT * FROM contactlist WHERE number IN (:number)")
+    fun getContactDetailsFromNumber(number: String): ContactList?
 
 
     @Insert()

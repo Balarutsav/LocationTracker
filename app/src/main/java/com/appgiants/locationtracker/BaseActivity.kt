@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.appgiants.locationtracker.R
 import com.appgiants.locationtracker.Utils.ApiClient
 import com.appgiants.locationtracker.Utils.ApiInterface
@@ -28,6 +29,7 @@ abstract class BaseActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         World.init(applicationContext)
         activity = this
+
 //        apiClienc = ApiClient.getClient(activity)?.create(ApiInterface::class.java)
         MobileAds.initialize(this)
         MobileAds.setRequestConfiguration(

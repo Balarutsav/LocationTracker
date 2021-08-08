@@ -1,13 +1,23 @@
 package com.appgiants.locationtracker.Activity
 
 import android.Manifest
+import android.R.attr
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.appgiants.locationtracker.R
+import com.appgiants.locationtracker.Utils.GpsTracker
 import com.appgiants.locationtracker.databinding.ActivityHomeScreenBinding
 import com.cluttrfly.driver.ui.base.BaseActivity
 import com.google.android.gms.ads.AdError
@@ -16,19 +26,58 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import java.util.*
+
 
 class HomeScreenActivity : BaseActivity(), View.OnClickListener {
-   lateinit var binding:ActivityHomeScreenBinding
-     val AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
-    val TAG="Home Screen"
+    lateinit var binding: ActivityHomeScreenBinding
+    val REQUEST_CODE_SPEECH_INPUT = 500;
+    val AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
+    val TAG = "Home Screen"
     private var mAdIsLoading: Boolean = false
     private var mInterstitialAd: InterstitialAd? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityHomeScreenBinding.inflate(layoutInflater)
+        binding = ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         getLocationPermission()
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu,menu)
+        return true
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_voice_navigation->{
+                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                )
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE,
+                    Locale.getDefault()
+                )
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+
+                try {
+
+                    startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+                } catch (e: Exception) {
+                    Toast
+                        .makeText(
+                            activity, " " + e.message,
+                            Toast.LENGTH_SHORT
+                        )
+                        .show()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
     private fun getLocationPermission(): Boolean {
         /*
@@ -36,19 +85,31 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
          */
-        if (ContextCompat.checkSelfPermission(this.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             return true;
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE),
-                100)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE),
+                100
+            )
             return false
         }
     }
-    fun init(){
+
+    fun init() {
         setSupportActionBar(binding.tb)
-        supportActionBar!!.setHomeAsUpIndicator(ContextCompat.getDrawable(applicationContext,R.drawable.ic_back))
+        supportActionBar!!.setHomeAsUpIndicator(
+            ContextCompat.getDrawable(
+                applicationContext,
+                R.drawable.ic_back
+            )
+        )
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         binding.btnCountryInfo.setOnClickListener(this)
@@ -60,7 +121,14 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
         loadAd()
         val adRequest = AdRequest.Builder().build()
         binding.adView.setOnClickListener(this)
-        }
+
+
+        var speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+var  speechRecognizerIntent =  Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -69,29 +137,31 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btnGpsRoute->{
+        when (v?.id) {
+            R.id.btnGpsRoute -> {
+                showInterstitial(v)
 
             }
-            R.id.btnCountryInfo->{
+            R.id.btnCountryInfo -> {
                 showInterstitial(v)
             }
-            R.id.btnTraficNear->{
+            R.id.btnTraficNear -> {
                 showInterstitial(v)
             }
-            R.id.btnSearchNumber->{
+            R.id.btnSearchNumber -> {
                 showInterstitial(v)
             }
-            R.id.btnMyLocation->{
+            R.id.btnMyLocation -> {
                 showInterstitial(v)
             }
-            R.id.btnContacts->{
+            R.id.btnContacts -> {
                 showInterstitial(v)
             }
 
         }
 
     }
+
     private fun showInterstitial(v: View) {
         if (mInterstitialAd != null) {
             mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
@@ -101,25 +171,26 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
                     // don't show the ad a second time.
                     mInterstitialAd = null
                     loadAd()
-                    when(v?.id){
-                        binding.btnSearchNumber.id->{
+                    when (v?.id) {
+                        binding.btnSearchNumber.id -> {
                             startActivityWithOutFinish(FindLocation::class.java)
                         }
-                        R.id.btnGpsRoute->{
-
+                        R.id.btnGpsRoute -> {
+                            startActivityWithOutFinish(RouteFinderActivity::class.java)
                         }
-                        R.id.btnCountryInfo->{
+                        R.id.btnCountryInfo -> {
                             startActivityWithOutFinish(CountryInfoListing::class.java)
                         }
-                        R.id.btnTraficNear->{
+                        R.id.btnTraficNear -> {
                             startActivityWithOutFinish(TrafficeActivity::class.java)
                         }
-                        R.id.btnMyLocation->{
+                        R.id.btnMyLocation -> {
                             startActivityWithOutFinish(MyLocationActivity::class.java)
                         }
-                        R.id.btnContacts->{
+                        R.id.btnContacts -> {
                             startActivityWithOutFinish(ContactListActivity::class.java)
                         }
+
                     }
 
                 }
@@ -138,24 +209,24 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
                 }
             }
             mInterstitialAd?.show(this)
-        }else{
-            when(v.id){
-                binding.btnSearchNumber.id->{
+        } else {
+            when (v.id) {
+                binding.btnSearchNumber.id -> {
                     startActivityWithOutFinish(FindLocation::class.java)
                 }
-                R.id.btnGpsRoute->{
+                R.id.btnGpsRoute -> {
 
                 }
-                R.id.btnCountryInfo->{
+                R.id.btnCountryInfo -> {
                     startActivityWithOutFinish(CountryInfoListing::class.java)
                 }
-                R.id.btnTraficNear->{
+                R.id.btnTraficNear -> {
                     startActivityWithOutFinish(TrafficeActivity::class.java)
                 }
-                R.id.btnMyLocation->{
+                R.id.btnMyLocation -> {
                     startActivityWithOutFinish(MyLocationActivity::class.java)
                 }
-                R.id.btnContacts->{
+                R.id.btnContacts -> {
                     startActivityWithOutFinish(ContactListActivity::class.java)
                 }
             }
@@ -189,6 +260,34 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            if (resultCode == RESULT_OK && attr.data != null) {
+                val result =data?.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS
+                )
+                Log.e("result", result?.get(0).toString())
+                openCurrentLocation(result?.get(0).toString())
+
+
+            }
+        }
+    }
+    private fun openCurrentLocation(dest:String) {
+    var    gpsTracker= GpsTracker(this)
+        val location = gpsTracker
+            .getLocation(LocationManager.GPS_PROVIDER)
+        val sendstring = "http://maps.google.com/maps?"+
+                "&daddr=" +
+                dest
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(sendstring)
+        )
+        startActivity(intent)
     }
 
 }

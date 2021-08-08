@@ -38,51 +38,70 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                app:layout_constraintEnd_toStartOf="@id/ivCurrentLocation"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:hint="route"
-                android:id="@+id/tilRoute"
-                app:hintTextColor="@color/dark_grey"
-                android:fontFamily="@font/montserrat_bold"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="match_parent"
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="0dp"
                     android:id="@+id/edtRoute"
-                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="Route"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivCurrentLocation"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:background="@drawable/background_round_edt"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:padding="8dp"
                     android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
 <androidx.appcompat.widget.AppCompatImageView
     android:layout_width="wrap_content"
     android:src="@drawable/ic_gps"
     android:id="@+id/ivCurrentLocation"
     android:tint="@color/purple_200"
-    app:layout_constraintTop_toTopOf="@id/tilRoute"
+    app:layout_constraintTop_toTopOf="@id/edtRoute"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="1"
-    app:layout_constraintStart_toEndOf="@id/tilRoute"
-    app:layout_constraintBottom_toBottomOf="@id/tilRoute"
+    android:layout_marginStart="10dp"
+    app:layout_constraintStart_toEndOf="@id/edtRoute"
+    app:layout_constraintBottom_toBottomOf="@id/edtRoute"
     android:layout_height="wrap_content"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tilRoute"
-                app:layout_constraintEnd_toEndOf="@id/tilRoute"
-                android:hint="Destination"
-                android:id="@+id/tilDestination"
-                app:hintTextColor="@color/dark_grey"
-                android:fontFamily="@font/montserrat_bold"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="match_parent"
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:id="@+id/edtDestination"
-                    android:fontFamily="@font/montserrat_bold"
+                    android:background="@drawable/background_round_edt"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toStartOf="@id/ivCurrentLocation"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/edtRoute"
+                    android:padding="8dp"
+                    android:hint="Destination"
+                    android:fontFamily="@font/montserrat_regular"
                     android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnFindLocation"
+                style="@style/textBold"
+                android:layout_width="match_parent"
+                android:layout_margin="30dp"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/background_round"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Find Location"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:paddingBottom="10dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edtDestination" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_200</item>
         <item name="colorOnPrimary">@color/black</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
@@ -14,7 +15,11 @@
         <!-- Customize your theme here. -->
     </style>
 
-
+    <style name="OutlinedBoxStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+        <item name="android:textColorHint">@color/purple_200</item>
+        <item name="boxStrokeWidth">0.1dp</item>
+    </style>
     <style name="textBold">
         <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>

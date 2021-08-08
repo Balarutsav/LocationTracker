@@ -3,8 +3,9 @@ plugins {
     id 'kotlin-android'
 
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
 }
-apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt'     
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
@@ -15,6 +16,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,7 +41,9 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     def room_version = "2.3.0"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.google.android.gms:play-services-ads:20.2.0'
     implementation 'com.google.android.material:material:1.4.0'
@@ -53,6 +57,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     def arch_version = "2.2.0-alpha01"
+    implementation "me.leolin:ShortcutBadger:1.1.22@aar"
     implementation"androidx.lifecycle:lifecycle-runtime-ktx:$arch_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'

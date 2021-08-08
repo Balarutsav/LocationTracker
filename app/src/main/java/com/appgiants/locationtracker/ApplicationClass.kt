@@ -1,12 +1,17 @@
 package com.appgiants.locationtracker
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 
 import androidx.annotation.Nullable
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -19,14 +24,34 @@ import java.util.*
 
 class ApplicationClass : Application(), Application.ActivityLifecycleCallbacks,
     LifecycleObserver {
+
+
+    var startTime: Long = 0
+
+
     private var appOpenAdManager: AppOpenAdManager? = null
     private var currentActivity: Activity? = null
     companion object {
+
+
+        @JvmField
+        var context: Context?=null
+
+        @JvmField
+        var applicationHandler: Handler? = null
         private const val LOG_TAG = "AppOpenAdManager"
         private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/3419835294"
+        var currentNetworkInfo: NetworkInfo? = null
+
+
+        private val connectivityManager: ConnectivityManager? = null
+
+        private val applicationInited = false
     }
     override fun onCreate() {
         super.onCreate()
+        context= applicationContext
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         registerActivityLifecycleCallbacks(this)
         MobileAds.initialize(
             this

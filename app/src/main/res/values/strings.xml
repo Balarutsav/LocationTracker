@@ -21,4 +21,7 @@
     <string name="ration_call">This app need access your call phone permssions</string>
     <string name="edit">Edit</string>
     <string name="read_contacts">app required readContacts permission</string>
+    <string name="your_location">Your Location</string>
+    <string name="please_enter_start_location">Please enter start location</string>
+    <string name="please_enter_dest_location">Please enter destination location</string>
 </resources>

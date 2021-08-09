@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     def arch_version = "2.2.0-alpha01"
-    implementation "me.leolin:ShortcutBadger:1.1.22@aar"
+    implementation "me.leolin:ShortcutBadger:1.1.22"
     implementation"androidx.lifecycle:lifecycle-runtime-ktx:$arch_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'

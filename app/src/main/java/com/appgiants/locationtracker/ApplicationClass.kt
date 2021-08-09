@@ -50,7 +50,9 @@ class ApplicationClass : Application(), Application.ActivityLifecycleCallbacks,
     }
     override fun onCreate() {
         super.onCreate()
+
         context= applicationContext
+        applicationHandler=Handler(mainLooper)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         registerActivityLifecycleCallbacks(this)
         MobileAds.initialize(

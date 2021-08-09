@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatImageView
 import com.appgiants.locationtracker.R
 import com.bumptech.glide.Glide
+import me.leolin.shortcutbadger.ShortcutBadger
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
@@ -36,6 +37,13 @@ fun Context.hideKeyboard() {
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
+ fun Context.updateBadge(count: Int) {
+    try {
+        if (count == 0) ShortcutBadger.removeCount(this) else ShortcutBadger.applyCount(this, count)
+    } catch (t: Throwable) {
+        Log.w("Badges", t)
+    }
+}
 
 fun AppCompatImageView.loadImage(context: Context, imgurl: String) {
     Glide.with(context).load(imgurl).into(this);

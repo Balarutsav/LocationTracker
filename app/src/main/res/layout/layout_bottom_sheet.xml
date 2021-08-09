@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:background="@color/dark_grey"
+    app:behavior_hideable="false"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    app:behavior_peekHeight="200dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    tools:context="com.appgiants.locationtracker.Activity.FindLocation"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:background="@color/white"
+        android:id="@+id/ivContact"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="60dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/user"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/textBold"
+        android:id="@+id/tvName"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+
+        android:layout_marginStart="20dp"
+        android:layout_width="0dp"
+        android:text="Un known"
+        android:textColor="@color/white"
+
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/tvAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivContact"
+
+        app:layout_constraintTop_toTopOf="@id/ivContact" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/textRegular"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_gps"
+        android:drawableTint="@color/white"
+        android:id="@+id/tvAddress"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+        android:text="India"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+
+        app:drawableTint="@color/green"
+        app:layout_constraintBottom_toTopOf="@id/tvCompany"
+        app:layout_constraintEnd_toEndOf="@id/tvName"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+
+        app:layout_constraintVertical_bias="0.5" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/textRegular"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_baseline_call_24"
+        android:drawableTint="@color/purple_200"
+        android:id="@+id/tvCompany"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+
+        android:text="Un known"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivContact"
+        app:layout_constraintStart_toStartOf="@id/tvAddress"
+
+        app:layout_constraintTop_toBottomOf="@id/tvAddress"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/textBold"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/white"
+        android:drawableTop="@drawable/ic_baseline_call_24"
+        android:id="@+id/tvCall"
+
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:text="Call"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/tvSms"
+        app:layout_constraintStart_toStartOf="@id/ivContact"
+
+        app:layout_constraintTop_toBottomOf="@id/tvCompany" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/textBold"
+        android:drawablePadding="10dp"
+
+        android:drawableTint="@color/white"
+        android:drawableTop="@drawable/ic_baseline_sms_24"
+        android:id="@+id/tvSms"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:text="@string/sms"
+        android:textAllCaps="true"
+
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/tvEdit"
+        app:layout_constraintStart_toEndOf="@id/tvCall"
+
+        app:layout_constraintTop_toBottomOf="@id/tvCompany" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/textBold"
+        android:drawablePadding="10dp"
+
+        android:drawableTint="@color/white"
+        android:drawableTop="@drawable/ic_baseline_edit_24"
+        android:id="@+id/tvEdit"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:text="Edit"
+        android:textAllCaps="true"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvSms"
+
+
+        app:layout_constraintTop_toBottomOf="@id/tvCompany" />
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/ad_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        ads:adSize="MEDIUM_RECTANGLE"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintTop_toBottomOf="@id/tvCall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

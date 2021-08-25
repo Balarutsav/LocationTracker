@@ -168,6 +168,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb" />
     </LinearLayout>
+
+
+    <!-- Template View for native ad -->
+    <com.google.android.ads.nativetemplates.TemplateView
+        android:visibility= "gone"
+        android:layout_marginBottom="20dp"
+        android:id= "@+id/nativeTemplateView"
+        app:layout_constraintBottom_toTopOf="@id/ad_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:gnt_template_type= "@layout/gnt_medium_template_view"
+        android:layout_width= "match_parent"
+        android:layout_height= "wrap_content" />
     <com.google.android.gms.ads.AdView
         android:id="@+id/ad_view"
         android:layout_width="wrap_content"
@@ -175,7 +188,6 @@
         android:layout_marginBottom="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintTop_toBottomOf="@id/ll3"
         ads:adSize="LARGE_BANNER"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
         app:layout_constraintBottom_toBottomOf="parent"

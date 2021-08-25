@@ -52,4 +52,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+    <!-- Template View for native ad -->
+    <com.google.android.ads.nativetemplates.TemplateView
+        android:visibility= "gone"
+        android:layout_marginBottom="20dp"
+        android:id= "@+id/nativeTemplateView"
+        app:layout_constraintBottom_toTopOf="@id/ad_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:gnt_template_type= "@layout/gnt_medium_template_view"
+        android:layout_width= "match_parent"
+        android:layout_height= "wrap_content" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

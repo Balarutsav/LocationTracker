@@ -24,4 +24,6 @@
     <string name="your_location">Your Location</string>
     <string name="please_enter_start_location">Please enter start location</string>
     <string name="please_enter_dest_location">Please enter destination location</string>
+    <string name="location_permission">Please give us location permission</string>
+    <string name="contacts_permission">Please give us read contacts permission for access contacts listing</string>
 </resources>

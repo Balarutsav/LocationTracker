@@ -1,2 +1,2 @@
 rootProject.name = "LocationTracker"
-include ':app'
+include ':app',":nativetemplates"

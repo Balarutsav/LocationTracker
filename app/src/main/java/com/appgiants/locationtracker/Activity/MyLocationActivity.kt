@@ -66,7 +66,7 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
         initlist()
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationProviderClient = LocationServices  .getFusedLocationProviderClient(this)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
     }
@@ -76,15 +76,6 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
 
             val gpsLocation = gpsTracker
                 .getLocation(LocationManager.GPS_PROVIDER)
-            if (gpsLocation != null) {
-                val latitude = gpsLocation.latitude
-                val longitude = gpsLocation.longitude
-                val result = "Latitude: " + gpsLocation.latitude +
-                        " Longitude: " + gpsLocation.longitude
-                Log.e(TAG,result)
-            } else {
-                showSettingsAlert()
-            }
             val location = gpsTracker
                 .getLocation(LocationManager.GPS_PROVIDER)
 
@@ -92,15 +83,19 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
             //remove the below if-condition and use the following couple of lines
             //double latitude = 37.422005;
             //double longitude = -122.084095
-            if (location != null) {
-                val latitude = location.latitude
-                val longitude = location.longitude
+            if (gpsTracker.getIsGPSTrackingEnabled()) {
+                val latitude = location?.latitude
+                val longitude = location?.longitude
 
-                    getAddressFromLocation(
-                    latitude, longitude,
-                    applicationContext, GeocoderHandler(binding,this)
-                )
-            } else {
+                if (longitude != null) {
+                    if (latitude != null) {
+                        getAddressFromLocation(
+                            latitude, longitude,
+                            applicationContext, GeocoderHandler(binding,this)
+                        )
+                    }
+                }
+            } else {    
                 showSettingsAlert()
             }
 
@@ -121,7 +116,7 @@ class MyLocationActivity :BaseActivity() , OnMapReadyCallback, View.OnClickListe
             locationAddress?.let {
                 Log.e("data",it)
                 var gson=Gson()
-                if (locationAddress!!.isNotEmpty()) {
+                if (locationAddress?.isNotEmpty()) {
                    var jsonObject=JSONObject(locationAddress)
                     try {
                         var addressDetailsModel=gson.fromJson(jsonObject.toString(),AddressDetailsModel::class.java)

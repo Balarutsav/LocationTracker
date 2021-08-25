@@ -59,7 +59,7 @@ class SplashActivity : BaseActivity() {
                             startMainActivity()
                         }
                     })
-        }, 10000)
+        }, 3000)
     }
 
     private fun startMainActivity() {

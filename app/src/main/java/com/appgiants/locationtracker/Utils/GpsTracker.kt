@@ -10,9 +10,10 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
 
-class GpsTracker(context: Context) : Service(), LocationListener {
+ class GpsTracker(context: Context) : Service(), LocationListener {
     protected var locationManager: LocationManager?
     var location: Location? = null
+
     @SuppressLint("MissingPermission")
     fun getLocation(provider: String?): Location? {
         if (locationManager!!.isProviderEnabled(provider!!)) {
@@ -28,7 +29,13 @@ class GpsTracker(context: Context) : Service(), LocationListener {
         return null
     }
 
-    override fun onLocationChanged(location: Location) {}
+    fun getIsGPSTrackingEnabled(): Boolean {
+
+        return locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+
+     override fun onLocationChanged(location: Location) {}
     override fun onProviderDisabled(provider: String) {}
     override fun onProviderEnabled(provider: String) {}
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}

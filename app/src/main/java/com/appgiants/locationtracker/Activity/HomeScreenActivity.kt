@@ -3,7 +3,7 @@ package com.appgiants.locationtracker.Activity
 import android.Manifest
 import android.R.attr
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
@@ -14,24 +14,37 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.appgiants.locationtracker.R
 import com.appgiants.locationtracker.Utils.GpsTracker
 import com.appgiants.locationtracker.databinding.ActivityHomeScreenBinding
 import com.cluttrfly.driver.ui.base.BaseActivity
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.ads.nativetemplates.NativeTemplateStyle
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
 
-class HomeScreenActivity : BaseActivity(), View.OnClickListener {
+class HomeScreenActivity : BaseActivity(), View.OnClickListener,
+    EasyPermissions.PermissionCallbacks {
     lateinit var binding: ActivityHomeScreenBinding
     val REQUEST_CODE_SPEECH_INPUT = 500;
+
+    companion object {
+        const val RC_LOCAION_CODE = 102;
+        const val RC_CONTACTS_CODE=120
+    }
+
+    lateinit var template: TemplateView
+    private var adLoaderNative: AdLoader? = null
+
     val AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712"
     val TAG = "Home Screen"
     private var mAdIsLoading: Boolean = false
@@ -45,14 +58,14 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.home_menu,menu)
+        menuInflater.inflate(R.menu.home_menu, menu)
         return true
 
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_voice_navigation->{
+        when (item.itemId) {
+            R.id.action_voice_navigation -> {
                 val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
                 intent.putExtra(
                     RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -79,26 +92,46 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    @AfterPermissionGranted(RC_LOCAION_CODE)
     private fun getLocationPermission(): Boolean {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
          */
-        if (ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            return true;
+        val perms = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+        return if (EasyPermissions.hasPermissions(this, *perms)) {
+            true
+
         } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE),
-                100
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(
+                this, getString(R.string.location_permission),
+                RC_LOCAION_CODE, *perms
             )
-            return false
+            false
+        }
+    }
+
+    @AfterPermissionGranted(RC_CONTACTS_CODE)
+    private fun getContactsPermission(): Boolean {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        val perms = arrayOf(Manifest.permission.READ_CONTACTS)
+        return if (EasyPermissions.hasPermissions(this, *perms)) {
+            true
+
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(
+                this, getString(R.string.contacts_permission),
+                RC_CONTACTS_CODE, *perms
+            )
+            false
         }
     }
 
@@ -121,12 +154,48 @@ class HomeScreenActivity : BaseActivity(), View.OnClickListener {
         loadAd()
         val adRequest = AdRequest.Builder().build()
         binding.adView.setOnClickListener(this)
-
+        binding.adView.loadAd(adRequest)
 
         var speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-var  speechRecognizerIntent =  Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        var speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        speechRecognizerIntent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        );
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+
+        val background: ColorDrawable? = null
+
+        adLoaderNative= AdLoader.Builder(activity, "ca-app-pub-3940256099942544/2247696110")
+            .forNativeAd { ad : NativeAd ->
+                val styles =
+                    NativeTemplateStyle.Builder().withMainBackgroundColor(background).build()
+                template = findViewById(com.appgiants.locationtracker.R.id.nativeTemplateView)
+                template.setStyles(styles)
+                template.setNativeAd(ad)
+
+                template.visibility=View.VISIBLE
+                // Showing a simple Toast message to user when Native an ad is Loaded and ready to show
+            }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    // Handle the failure by logging, altering the UI, and so on.
+                }
+            })
+            .withNativeAdOptions(
+                NativeAdOptions.Builder()
+                    // Methods in the NativeAdOptions.Builder class can be
+                    // used here to specify individual options settings.
+                    .build())
+            .build()
+
+        val adRequest2 = AdRequest.Builder().build()
+
+        // load Native Ad with the Request
+
+        // load Native Ad with the Request
+        adLoaderNative?.loadAd(adRequest2)
+
 
     }
 
@@ -146,20 +215,45 @@ var  speechRecognizerIntent =  Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 showInterstitial(v)
             }
             R.id.btnTraficNear -> {
-                showInterstitial(v)
+                if (getLocationPermission()) {
+                    showInterstitial(v)
+                }
             }
             R.id.btnSearchNumber -> {
                 showInterstitial(v)
             }
             R.id.btnMyLocation -> {
-                showInterstitial(v)
+                if (getLocationPermission()) {
+                    showInterstitial(v)
+                }
             }
             R.id.btnContacts -> {
-                showInterstitial(v)
+                if (getContactsPermission()) {
+                    showInterstitial(v)
+                }
             }
 
         }
 
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
     }
 
     private fun showInterstitial(v: View) {
@@ -266,7 +360,7 @@ var  speechRecognizerIntent =  Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
             if (resultCode == RESULT_OK && attr.data != null) {
-                val result =data?.getStringArrayListExtra(
+                val result = data?.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS
                 )
                 Log.e("result", result?.get(0).toString())
@@ -276,11 +370,12 @@ var  speechRecognizerIntent =  Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             }
         }
     }
-    private fun openCurrentLocation(dest:String) {
-    var    gpsTracker= GpsTracker(this)
+
+    private fun openCurrentLocation(dest: String) {
+        var gpsTracker = GpsTracker(this)
         val location = gpsTracker
             .getLocation(LocationManager.GPS_PROVIDER)
-        val sendstring = "http://maps.google.com/maps?"+
+        val sendstring = "http://maps.google.com/maps?" +
                 "&daddr=" +
                 dest
         val intent = Intent(
